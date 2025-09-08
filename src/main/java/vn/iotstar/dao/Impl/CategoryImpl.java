@@ -80,7 +80,8 @@ public class CategoryImpl implements CategoryDao {
     public List<Category> findAll() {
         EntityManager em = JPAConfig.getEntityManager();
         try {
-            TypedQuery<Category> q = em.createQuery("SELECT c FROM Category c ORDER BY c.cateid", Category.class);
+            TypedQuery<Category> q = em.createQuery(
+                "SELECT c FROM Category c LEFT JOIN FETCH c.owner ORDER BY c.cateid", Category.class);
             return q.getResultList();
         } finally {
             em.close();
@@ -95,6 +96,20 @@ public class CategoryImpl implements CategoryDao {
             TypedQuery<Category> q = em.createQuery(
                 "SELECT c FROM Category c WHERE LOWER(c.catename) LIKE :kw ORDER BY c.cateid", Category.class);
             q.setParameter("kw", "%" + keyword.toLowerCase() + "%");
+            return q.getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Category> findByUserId(Integer userId) {
+        if (userId == null) return Collections.emptyList();
+        EntityManager em = JPAConfig.getEntityManager();
+        try {
+            TypedQuery<Category> q = em.createQuery(
+                "SELECT c FROM Category c LEFT JOIN FETCH c.owner WHERE c.owner.userId = :uid ORDER BY c.cateid", Category.class);
+            q.setParameter("uid", userId);
             return q.getResultList();
         } finally {
             em.close();

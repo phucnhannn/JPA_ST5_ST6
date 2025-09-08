@@ -19,6 +19,10 @@ public class Category {
 	@Column(name = "icons", length = 255)
 	private String icon;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User owner;
+
 	public Category() {
 	}
 
@@ -49,6 +53,14 @@ public class Category {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
 	}
 
 	@Override

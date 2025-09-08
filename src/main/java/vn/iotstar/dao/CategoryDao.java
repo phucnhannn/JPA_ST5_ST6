@@ -12,4 +12,5 @@ public interface CategoryDao {
     Optional<Category> findById(Integer id);
     List<Category> findAll();
     List<Category> searchByName(String keyword);
+    List<Category> findByUserId(Integer userId);
 }
