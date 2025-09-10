@@ -6,108 +6,117 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Danh mục - Manager</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 24px; }
-        .container { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 10px 12px; }
-        th { background: #eaf3ff; }
-        .actions a { margin-right: 8px; }
-        .panel { border: 1px solid #c6d5e3; border-radius: 6px; }
-        .panel h3 { margin: 0; padding: 10px 12px; background: #d7ebf7; }
-        .panel .body { padding: 12px; }
-        input[type=text] { width: 100%; padding: 8px; margin: 6px 0 6px; box-sizing: border-box; }
-        label { display:block; margin-top:8px; }
-        .form-actions { margin-top: 12px; }
-        button { padding: 8px 14px; }
-        .muted { color:#666; font-size:12px; }
-        .topbar { margin-bottom: 12px; }
-        .icon-cell { text-align:center; }
-        .icon-cell img { height: 36px; max-width: 56px; object-fit: contain; display: inline-block; }
-    </style>
 </head>
 <body>
-<div class="topbar">
-    <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
-</div>
-<h2>Danh mục của tôi (Manager)</h2>
-<p class="muted">Xin chào, <c:out value="${currentUser.fullName != null ? currentUser.fullName : currentUser.username}"/>. Chỉ thấy/sửa/xóa các danh mục do bạn tạo.</p>
-<div class="container">
-    <div>
-        <div class="panel">
-            <h3>Danh sách danh mục của tôi</h3>
-            <div class="body">
-                <table>
+<!-- Topbar xanh lá -->
+<table width="100%" cellpadding="10" cellspacing="0" border="0" bgcolor="#2e7d32">
+  <tr>
+    <td><font color="#ffffff"><b>Ứng dụng</b></font></td>
+    <td align="right"><a href="${pageContext.request.contextPath}/logout"><font color="#ffffff">Đăng xuất</font></a></td>
+  </tr>
+</table>
+
+<table align="center" width="95%" cellpadding="0" cellspacing="0" border="0">
+  <tr><td height="12"></td></tr>
+  <tr>
+    <td>
+      <h2>Danh mục của tôi (Manager)</h2>
+      <p>Xin chào, <c:out value="${currentUser.fullName != null ? currentUser.fullName : currentUser.username}"/>. Chỉ thấy/sửa/xóa các danh mục do bạn tạo.</p>
+
+      <table width="100%" cellpadding="8" cellspacing="0" border="0">
+        <tr valign="top">
+          <!-- Danh sách -->
+          <td width="66%">
+            <table width="100%" cellpadding="10" cellspacing="0" border="1" bordercolor="#c8e6c9">
+              <tr bgcolor="#e8f5e9"><td><b>Danh sách danh mục của tôi</b></td></tr>
+              <tr>
+                <td>
+                  <table width="100%" cellpadding="8" cellspacing="0" border="1" bordercolor="#e0e0e0">
                     <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Tên danh mục</th>
-                        <th>Icon</th>
-                        <th>Hành động</th>
-                    </tr>
+                      <tr bgcolor="#f1f8e9">
+                        <th align="left">ID</th>
+                        <th align="left">Tên danh mục</th>
+                        <th align="center">Icon</th>
+                        <th align="left">Hành động</th>
+                      </tr>
                     </thead>
                     <tbody>
-                    <c:forEach var="item" items="${categories}">
+                      <c:forEach var="item" items="${categories}">
                         <tr>
-                            <td>${item.cateid}</td>
-                            <td>${item.catename}</td>
-                            <td class="icon-cell">
+                          <td>${item.cateid}</td>
+                          <td>${item.catename}</td>
+                          <td align="center">
+                            <c:choose>
+                              <c:when test="${not empty item.icon}">
                                 <c:choose>
-                                    <c:when test="${not empty item.icon}">
-                                        <c:choose>
-                                            <c:when test="${fn:startsWith(item.icon, '/')}">
-                                                <img src="${pageContext.request.contextPath}${item.icon}" alt="icon"/>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <img src="${item.icon}" alt="icon"/>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </c:when>
-                                    <c:otherwise>-</c:otherwise>
+                                  <c:when test="${fn:startsWith(item.icon, '/')}">
+                                    <img src="${pageContext.request.contextPath}${item.icon}" alt="icon" height="36"/>
+                                  </c:when>
+                                  <c:otherwise>
+                                    <img src="${item.icon}" alt="icon" height="36"/>
+                                  </c:otherwise>
                                 </c:choose>
-                            </td>
-                            <td class="actions">
-                                <a href="${pageContext.request.contextPath}/manager/category/edit?id=${item.cateid}">Cập nhật</a>
-                                <a href="${pageContext.request.contextPath}/manager/category/delete?id=${item.cateid}"
-                                   onclick="return confirm('Xóa danh mục này?')">Xóa</a>
-                            </td>
+                              </c:when>
+                              <c:otherwise>-</c:otherwise>
+                            </c:choose>
+                          </td>
+                          <td>
+                            <a href="${pageContext.request.contextPath}/manager/category/edit?id=${item.cateid}">Cập nhật</a>
+                            &nbsp;|&nbsp;
+                            <a href="${pageContext.request.contextPath}/manager/category/delete?id=${item.cateid}" onclick="return confirm('Xóa danh mục này?')">Xóa</a>
+                          </td>
                         </tr>
-                    </c:forEach>
+                      </c:forEach>
                     </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+                  </table>
+                </td>
+              </tr>
+            </table>
+          </td>
 
-    <div>
-        <div class="panel">
-            <h3><c:if test="${empty cate}">Thêm danh mục</c:if><c:if test="${not empty cate}">Cập nhật danh mục</c:if></h3>
-            <div class="body">
-                <c:set var="isEdit" value="${not empty cate}"/>
-                <form method="post" enctype="multipart/form-data"
-                      action="${pageContext.request.contextPath}<c:out value='${isEdit ? "/manager/category/update" : "/manager/category/create"}'/>">
+          <!-- Form -->
+          <td width="34%">
+            <table width="100%" cellpadding="10" cellspacing="0" border="1" bordercolor="#c8e6c9">
+              <tr bgcolor="#e8f5e9"><td><b><c:if test="${empty cate}">Thêm danh mục</c:if><c:if test="${not empty cate}">Cập nhật danh mục</c:if></b></td></tr>
+              <tr>
+                <td>
+                  <c:set var="isEdit" value="${not empty cate}"/>
+                  <form method="post" enctype="multipart/form-data" action="${pageContext.request.contextPath}<c:out value='${isEdit ? "/manager/category/update" : "/manager/category/create"}'/>">
                     <c:if test="${isEdit}">
-                        <input type="hidden" name="id" value="${cate.cateid}"/>
+                      <input type="hidden" name="id" value="${cate.cateid}"/>
                     </c:if>
-                    <label>Tên danh mục</label>
-                    <input type="text" name="catename" value="<c:out value='${isEdit ? cate.catename : ""}'/>" required/>
+                    <table width="100%" cellpadding="6" cellspacing="0" border="0">
+                      <tr><td>Tên danh mục</td></tr>
+                      <tr><td><input type="text" name="catename" value="<c:out value='${isEdit ? cate.catename : ""}'/>" required/></td></tr>
 
-                    <label>Icon (URL ảnh - tùy chọn)</label>
-                    <input type="text" name="icon" value="<c:out value='${isEdit ? cate.icon : ""}'/>"/>
+                      <tr><td>Icon (URL ảnh - tùy chọn)</td></tr>
+                      <tr><td><input type="text" name="icon" value="<c:out value='${isEdit ? cate.icon : ""}'/>"/></td></tr>
 
-                    <label>Hoặc tải ảnh (png, jpg, jpeg, gif, webp, svg)</label>
-                    <input type="file" name="iconFile" accept="image/*"/>
+                      <tr><td>Hoặc tải ảnh (png, jpg, jpeg, gif, webp, svg)</td></tr>
+                      <tr><td><input type="file" name="iconFile" accept="image/*"/></td></tr>
 
-                    <div class="form-actions">
-                        <button type="submit">Submit</button>
-                        <c:if test="${isEdit}">
-                            <a href="${pageContext.request.contextPath}/manager/category" style="margin-left:8px;">Hủy</a>
-                        </c:if>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+                      <tr>
+                        <td align="center">
+                          <table cellpadding="8" cellspacing="0" border="0">
+                            <tr>
+                              <td bgcolor="#2e7d32" align="center"><input type="submit" value="Submit"></td>
+                              <c:if test="${isEdit}">
+                                <td><a href="${pageContext.request.contextPath}/manager/category">Hủy</a></td>
+                              </c:if>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+                  </form>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
 </body>
 </html>

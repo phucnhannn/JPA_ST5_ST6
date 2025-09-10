@@ -42,16 +42,39 @@ public final class UploadUtils {
     }
 
     private static void tryCopyToSourceUploads(File realDir, String safeName, Path sourceFile) {
+        // First, try Maven project layout: .../target/... -> copy to {projectRoot}/src/main/webapp/uploads
         try {
             Path realPath = realDir.toPath();
             String p = realPath.toString();
             int idx = p.replace('\\', '/').toLowerCase(Locale.ROOT).indexOf("/target/");
-            if (idx == -1) return;
-            String projectRoot = p.substring(0, idx);
-            Path sourceUploads = Paths.get(projectRoot, "src", "main", "webapp", "uploads");
+            if (idx != -1) {
+                String projectRoot = p.substring(0, idx);
+                Path sourceUploads = Paths.get(projectRoot, "src", "main", "webapp", "uploads");
+                Files.createDirectories(sourceUploads);
+                Path dest = sourceUploads.resolve(safeName);
+                if (!Files.exists(dest)) {
+                    try (FileInputStream in = new FileInputStream(sourceFile.toFile());
+                         FileOutputStream out = new FileOutputStream(dest.toFile())) {
+                        in.transferTo(out);
+                    }
+                }
+                return; // done
+            }
+        } catch (Exception ignored) {
+        }
+
+        // Fallback: configurable or known dev path (use system property, env var, then a sensible default)
+        try {
+            String override = System.getProperty("project.src.webapp");
+            if (override == null || override.isBlank()) {
+                override = System.getenv("PROJECT_SRC_WEBAPP");
+            }
+            Path srcWebapp = (override != null && !override.isBlank())
+                    ? Paths.get(override)
+                    : Paths.get("D:", "LT Web", "StudyWeb", "workspace", "JPAST56", "src", "main", "webapp");
+            Path sourceUploads = srcWebapp.resolve("uploads");
             Files.createDirectories(sourceUploads);
             Path dest = sourceUploads.resolve(safeName);
-            // If file already exists, skip copy
             if (!Files.exists(dest)) {
                 try (FileInputStream in = new FileInputStream(sourceFile.toFile());
                      FileOutputStream out = new FileOutputStream(dest.toFile())) {

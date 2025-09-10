@@ -5,25 +5,25 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Home - Manager</title>
-    <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
-        .topbar { margin-bottom: 16px; }
-        .box { max-width: 640px; border: 1px solid #e1e1e1; border-radius: 8px; padding: 24px; }
-        .actions { margin-top: 20px; }
-        .btn { display:inline-block; padding:10px 16px; background:#1976d2; color:#fff; text-decoration:none; border-radius:6px; }
-        .btn:hover { background:#125aa0; }
-    </style>
 </head>
 <body>
 <div class="topbar">
-    <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+  <div class="container bar">
+    <div class="brand">Ứng dụng</div>
+    <div><a href="${pageContext.request.contextPath}/logout">Đăng xuất</a></div>
+  </div>
 </div>
-<div class="box">
-    <h2>Xin chào, <c:out value="${currentUser.fullName != null ? currentUser.fullName : currentUser.username}"/> (Manager)</h2>
-    <p>Chào mừng bạn đến trang chủ. Nhấn nút bên dưới để quản lý danh mục của bạn.</p>
-    <div class="actions">
-        <a class="btn" href="${pageContext.request.contextPath}/manager/category">Quản lý danh mục</a>
-    </div>
+<div class="container">
+  <div class="card">
+      <div class="title"><h3>Trang chủ - Manager</h3></div>
+      <div class="body">
+          <h2>Xin chào, <c:out value="${currentUser.fullName != null ? currentUser.fullName : currentUser.username}"/> (Manager)</h2>
+          <p>Chào mừng bạn đến trang chủ. Nhấn nút bên dưới để quản lý danh mục của bạn.</p>
+          <div>
+              <a class="btn btn-primary" href="${pageContext.request.contextPath}/manager/category">Danh mục của tôi (Manager)</a>
+          </div>
+      </div>
+  </div>
 </div>
 </body>
 </html>
