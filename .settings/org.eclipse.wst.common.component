@@ -11,6 +11,9 @@
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
                 
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/target/generated-sources/annotations"/>
+        
+        <!-- Add libs folder so local migrated jars are published to WEB-INF/lib -->
+        <wb-resource deploy-path="/WEB-INF/lib" source-path="/libs"/>
                 
         <property name="context-root" value="JPAST56"/>
                 

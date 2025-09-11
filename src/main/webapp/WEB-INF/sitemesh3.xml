@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sitemesh>
+	<!-- Public site decorator (catch-all) -->
+	<mapping path="/*" name="web" decorator="web.jsp" />
+
+	<!-- Exclude paths from decoration -->
+	<mapping path="/api*" exclude="true" />
+	<mapping path="/login*" exclude="true" />
+	<mapping path="/uploads/*" exclude="true" />
+</sitemesh>
