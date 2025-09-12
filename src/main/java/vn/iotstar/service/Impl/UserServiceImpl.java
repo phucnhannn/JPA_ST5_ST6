@@ -22,7 +22,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findById(Integer id) {
+        return dao.findById(id);
+    }
+
+    @Override
     public User create(User user) {
         return dao.create(user);
+    }
+
+    @Override
+    public User update(User user) {
+        return dao.update(user);
     }
 }

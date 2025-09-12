@@ -26,11 +26,6 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HttpSession session = req.getSession(false);
-        User current = (session != null) ? (User) session.getAttribute("currentUser") : null;
-        List<Category> items = service.findAll();
-        req.setAttribute("currentUser", current);
-        req.setAttribute("categories", items);
-        req.getRequestDispatcher("/views/user/categories.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/user/category");
     }
 }

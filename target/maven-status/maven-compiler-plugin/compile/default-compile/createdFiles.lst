@@ -22,6 +22,7 @@ vn\iotstar\controller\user\CategoryController.class
 vn\iotstar\dao\Impl\CategoryImpl.class
 vn\iotstar\dao\UserDao.class
 vn\iotstar\controller\admin\HomeServlet.class
+vn\iotstar\controller\user\ProfileController.class
 vn\iotstar\service\Impl\UserServiceImpl.class
 vn\iotstar\controller\admin\CategoryController.class
 vn\iotstar\controller\auth\RegisterServlet.class

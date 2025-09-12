@@ -10,7 +10,11 @@
 <div class="topbar">
   <div class="container bar">
     <div class="brand">Ứng dụng</div>
-    <div><a href="${pageContext.request.contextPath}/logout">Đăng xuất</a></div>
+    <div>
+      <a href="${pageContext.request.contextPath}/manager/profile">Hồ sơ</a>
+      &nbsp;|&nbsp;
+      <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
+    </div>
   </div>
 </div>
 <div class="container">

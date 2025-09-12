@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
         if (user != null && user.getRoleId() != null) {
             String ctx = req.getContextPath();
             switch (user.getRoleId()) {
-                case 1 -> resp.sendRedirect(ctx + "/user/home");
+                case 1 -> resp.sendRedirect(ctx + "/user/category");
                 case 2 -> resp.sendRedirect(ctx + "/manager/home");
                 case 3 -> resp.sendRedirect(ctx + "/admin/home");
                 default -> resp.sendRedirect(ctx + "/login");
@@ -53,7 +53,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("currentUser", user);
             String ctx = req.getContextPath();
             switch (user.getRoleId()) {
-                case 1 -> resp.sendRedirect(ctx + "/user/home");
+                case 1 -> resp.sendRedirect(ctx + "/user/category");
                 case 2 -> resp.sendRedirect(ctx + "/manager/home");
                 case 3 -> resp.sendRedirect(ctx + "/admin/home");
                 default -> resp.sendRedirect(ctx + "/login");

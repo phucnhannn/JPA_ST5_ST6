@@ -11,7 +11,11 @@
 <table width="100%" cellpadding="10" cellspacing="0" border="0" bgcolor="#2e7d32">
   <tr>
     <td><font color="#ffffff"><b>Ứng dụng</b></font></td>
-    <td align="right"><a href="${pageContext.request.contextPath}/logout"><font color="#ffffff">Đăng xuất</font></a></td>
+    <td align="right">
+      <a href="${pageContext.request.contextPath}/admin/profile"><font color="#ffffff">Hồ sơ</font></a>
+      &nbsp;|&nbsp;
+      <a href="${pageContext.request.contextPath}/logout"><font color="#ffffff">Đăng xuất</font></a>
+    </td>
   </tr>
 </table>
 

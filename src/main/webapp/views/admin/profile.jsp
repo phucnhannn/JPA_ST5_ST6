@@ -1,0 +1,1 @@
+<%@ include file="/views/user/profile.jsp" %>

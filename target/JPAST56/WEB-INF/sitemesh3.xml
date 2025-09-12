@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <sitemesh>
-	<!-- Admin area decorator (more specific first) -->
-	<mapping path="/admin/*" name="admin" decorator="admin.jsp" />
-
-	<!-- Manager area decorator (more specific first) -->
-	<mapping path="/manager/*" name="manager" decorator="manager.jsp" />
-
-	<!-- Public site decorator (catch-all last) -->
+	<!-- Public site decorator (catch-all) -->
 	<mapping path="/*" name="web" decorator="web.jsp" />
 
 	<!-- Exclude paths from decoration -->

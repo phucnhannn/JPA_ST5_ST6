@@ -7,7 +7,6 @@
     <title>Home</title>
 </head>
 <body>
-<!-- Topbar xanh lá -->
 <table width="100%" cellpadding="10" cellspacing="0" border="0" bgcolor="#2e7d32">
   <tr>
     <td><font color="#ffffff"><b>Ứng dụng</b></font></td>
@@ -15,7 +14,6 @@
   </tr>
 </table>
 
-<!-- Nội dung -->
 <table align="center" width="95%" cellpadding="0" cellspacing="0" border="0">
   <tr><td height="12"></td></tr>
   <tr>
@@ -37,7 +35,6 @@
           </c:choose>
       </c:set>
 
-      <!-- Khung thông tin -->
       <table width="100%" cellpadding="10" cellspacing="0" border="1" bordercolor="#c8e6c9">
         <tr bgcolor="#e8f5e9"><td><b>Xin chào</b></td></tr>
         <tr>
@@ -60,7 +57,6 @@
 
       <br/>
 
-      <!-- Bảng danh mục -->
       <table width="100%" cellpadding="12" cellspacing="0" border="1" bordercolor="#c8e6c9">
         <tr bgcolor="#e8f5e9"><td><b>Danh sách danh mục</b></td></tr>
         <tr>

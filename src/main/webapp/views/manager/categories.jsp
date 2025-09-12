@@ -8,14 +8,6 @@
     <title>Danh mục - Manager</title>
 </head>
 <body>
-<!-- Topbar xanh lá -->
-<table width="100%" cellpadding="10" cellspacing="0" border="0" bgcolor="#2e7d32">
-  <tr>
-    <td><font color="#ffffff"><b>Ứng dụng</b></font></td>
-    <td align="right"><a href="${pageContext.request.contextPath}/logout"><font color="#ffffff">Đăng xuất</font></a></td>
-  </tr>
-</table>
-
 <table align="center" width="95%" cellpadding="0" cellspacing="0" border="0">
   <tr><td height="12"></td></tr>
   <tr>

@@ -71,4 +71,24 @@ public class UserDaoImpl implements UserDao {
             em.close();
         }
     }
+
+    @Override
+    public User update(User user) {
+        EntityManager em = JPAConfig.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            User merged = em.merge(user);
+            tx.commit();
+            return merged;
+        } catch (Exception e) {
+            if (tx.isActive()) tx.rollback();
+            // Log lỗi ra console và ném lại exception
+            System.err.println("[UserDaoImpl] Update failed: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
+        } finally {
+            em.close();
+        }
+    }
 }

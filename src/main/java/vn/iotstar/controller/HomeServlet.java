@@ -34,13 +34,22 @@ public class HomeServlet extends HttpServlet {
         }
         List<Category> items;
         int role = current.getRoleId();
-        if (role == 2) {
+        if (role == 2) { 
             items = service.findByUserId(current.getUserId());
-        } else {
+        } else { 
             items = service.findAll();
         }
         req.setAttribute("currentUser", current);
         req.setAttribute("categories", items);
-        req.getRequestDispatcher("/views/home.jsp").forward(req, resp);
+
+        String view;
+        if (role == 2) {
+            view = "/views/manager/categories.jsp";
+        } else if (role == 3) {
+            view = "/views/admin/categories.jsp";
+        } else {
+            view = "/views/user/categories.jsp";
+        }
+        req.getRequestDispatcher(view).forward(req, resp);
     }
 }

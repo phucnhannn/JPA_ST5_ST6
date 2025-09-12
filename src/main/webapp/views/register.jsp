@@ -6,7 +6,6 @@
     <title>Đăng ký tài khoản</title>
 </head>
 <body>
-<!-- Topbar xanh lá -->
 <table width="100%" cellpadding="10" cellspacing="0" border="0" bgcolor="#2e7d32">
   <tr>
     <td><font color="#ffffff"><b>Ứng dụng</b></font></td>
@@ -14,7 +13,6 @@
   </tr>
 </table>
 
-<!-- Khung form đăng ký -->
 <table align="center" width="90%" cellpadding="0" cellspacing="0" border="0">
   <tr><td height="16"></td></tr>
   <tr>

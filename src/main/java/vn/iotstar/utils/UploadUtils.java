@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -19,13 +20,30 @@ public final class UploadUtils {
 
     public static String saveToUploads(HttpServletRequest req, Part filePart) throws IOException {
         if (filePart == null || filePart.getSize() == 0) return null;
+
         String submitted = getSubmittedFileName(filePart);
-        if (submitted == null || submitted.isBlank()) return null;
         String ext = getExt(submitted);
-        if (!isAllowedExt(ext)) {
-            throw new IOException("File type not allowed: " + ext);
+        String contentType = safeLower(filePart.getContentType());
+
+        // Ensure only images are accepted
+        if (contentType == null || !contentType.startsWith("image/")) {
+            if (!isAllowedExt(ext)) {
+                throw new IOException("Only image uploads are allowed");
+            }
         }
-        String safeName = sanitizeFileName(removeExt(submitted)) + "_" + UUID.randomUUID() + ext;
+
+        // Derive extension from content type if missing or not allowed
+        if (ext.isBlank() || !isAllowedExt(ext)) {
+            ext = deriveExtFromContentType(contentType);
+        }
+        if (ext.isBlank()) {
+            // Final fallback
+            ext = ".png";
+        }
+
+        String base = sanitizeFileName(removeExt(submitted != null ? submitted : "image"));
+        if (base.isBlank()) base = "img";
+        String safeName = base + "_" + UUID.randomUUID() + ext.toLowerCase(Locale.ROOT);
 
         String realUploadDir = req.getServletContext().getRealPath("/uploads");
         if (realUploadDir == null) throw new IOException("Cannot resolve real path for /uploads");
@@ -34,7 +52,11 @@ public final class UploadUtils {
             throw new IOException("Cannot create uploads directory: " + realUploadDir);
         }
         Path dest = Paths.get(realDir.getAbsolutePath(), safeName);
-        filePart.write(dest.toString());
+
+        // Write bytes to destination reliably
+        try (InputStream in = filePart.getInputStream()) {
+            Files.copy(in, dest);
+        }
 
         tryCopyToSourceUploads(realDir, safeName, dest);
 
@@ -86,7 +108,7 @@ public final class UploadUtils {
     }
 
     private static boolean isAllowedExt(String ext) {
-        String e = ext.toLowerCase(Locale.ROOT);
+        String e = ext == null ? "" : ext.toLowerCase(Locale.ROOT);
         return e.equals(".png") || e.equals(".jpg") || e.equals(".jpeg") || e.equals(".gif") || e.equals(".webp") || e.equals(".svg");
     }
 
@@ -104,16 +126,39 @@ public final class UploadUtils {
     }
 
     private static String sanitizeFileName(String name) {
-        return name.replaceAll("[^a-zA-Z0-9-_]", "_");
+        return name == null ? "" : name.replaceAll("[^a-zA-Z0-9-_]", "_");
     }
 
     private static String getExt(String name) {
+        if (name == null) return "";
         int i = name.lastIndexOf('.');
         return (i >= 0) ? name.substring(i) : "";
     }
 
     private static String removeExt(String name) {
+        if (name == null) return "";
         int i = name.lastIndexOf('.');
         return (i >= 0) ? name.substring(0, i) : name;
+    }
+
+    private static String safeLower(String s) {
+        return s == null ? null : s.toLowerCase(Locale.ROOT);
+    }
+
+    private static String deriveExtFromContentType(String ct) {
+        if (ct == null) return "";
+        switch (ct.toLowerCase(Locale.ROOT)) {
+            case "image/png": return ".png";
+            case "image/jpeg": return ".jpg";
+            case "image/jpg": return ".jpg";
+            case "image/gif": return ".gif";
+            case "image/webp": return ".webp";
+            case "image/svg+xml": return ".svg";
+            default:
+                if (ct.startsWith("image/")) {
+                    return "." + ct.substring("image/".length());
+                }
+                return "";
+        }
     }
 }

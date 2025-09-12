@@ -5,6 +5,42 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Home - User</title>
+    <style>
+      body {
+        background-color: #e8f5e9;
+        color: #1b5e20;
+      }
+      .topbar, .bar {
+        background-color: #c8e6c9;
+        color: #388e3c;
+        padding: 10px 0;
+        border-bottom: 1px solid #a5d6a7;
+      }
+      .brand {
+        font-weight: bold;
+        color: #388e3c;
+        font-size: 1.3em;
+      }
+      .card {
+        background-color: #f1f8e9;
+        border: 1px solid #c8e6c9;
+        color: #388e3c;
+        margin-top: 30px;
+        box-shadow: 0 2px 8px #c8e6c9;
+      }
+      .title h3 {
+        color: #388e3c;
+      }
+      .btn-primary {
+        background-color: #a5d6a7;
+        border-color: #388e3c;
+        color: #1b5e20;
+      }
+      .btn-primary:hover {
+        background-color: #81c784;
+        color: #fff;
+      }
+    </style>
 </head>
 <body>
 <div class="topbar">
